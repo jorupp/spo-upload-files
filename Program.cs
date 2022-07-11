@@ -43,9 +43,9 @@ try
 {
     // username/password auth is giving "Microsoft.Identity.Client.MsalClientException: Unsupported User Type 'Unknown'. Please see https://aka.ms/msal-net-up."
     //var am = AuthenticationManager.CreateWithCredentials(username, ssPassword);
-
-    // client-secret didn't work either
     //using var context = await am.GetContextAsync(site);
+
+    // client-secret didn't work either, I could create the context, but operations failed with "The remote server returned an error: (401) Unauthorized."
     //using var context = new AuthenticationManager().GetACSAppOnlyContext(site, clientId, clientSecret);
 
     var authManager = new AuthenticationManager(clientId, certPath, certPassword, tenantName);
