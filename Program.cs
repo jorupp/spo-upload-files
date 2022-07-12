@@ -53,34 +53,39 @@ try
 
     Console.WriteLine("Context created");
 
-    var pdfContent = await GetFile("PdfDoc.pdf");
-    var wordContent = await GetFile("WordDoc.docx");
-    Console.WriteLine("File content read");
-
-    var list = context.Web.Lists.GetByTitle(libTitle);
-    var rootFolder = list.RootFolder;
-    context.Load(rootFolder);
-    context.Load(rootFolder.Folders);
+    var lists = context.Web.Lists;
+    context.Load(lists);
     await context.ExecuteQueryAsync();
+    Console.WriteLine($"Lists: {string.Join(", ", lists.Select(i => i.Title))}");
 
-    var grower = "Grower1";
+    //var pdfContent = await GetFile("PdfDoc.pdf");
+    //var wordContent = await GetFile("WordDoc.docx");
+    //Console.WriteLine("File content read");
 
-    var fci = new FileCreationInformation
-    {
-        Content = pdfContent,
-        Overwrite = true,
-        Url = "PdfDoc.pdf",
-    };
+    //var list = context.Web.Lists.GetByTitle(libTitle);
+    //var rootFolder = list.RootFolder;
+    //context.Load(rootFolder);
+    //context.Load(rootFolder.Folders);
+    //await context.ExecuteQueryAsync();
 
-    //var folder = context.Web.GetFolderByServerRelativeUrl("/")
-    //var folder = rootFolder.Folders.FirstOrDefault(i => i.Name == grower);
-    var folder = await rootFolder.EnsureFolderAsync(grower); // TODO: this makes a call, probably want to avoid that within the loop for the real thing
-    var file = folder.Files.Add(fci);
-    context.Load(file);
-    Console.WriteLine("Creating file...");
-    await context.ExecuteQueryAsync();
+    //var grower = "Grower1";
 
-    Console.WriteLine("Successfully created file");
+    //var fci = new FileCreationInformation
+    //{
+    //    Content = pdfContent,
+    //    Overwrite = true,
+    //    Url = "PdfDoc.pdf",
+    //};
+
+    ////var folder = context.Web.GetFolderByServerRelativeUrl("/")
+    ////var folder = rootFolder.Folders.FirstOrDefault(i => i.Name == grower);
+    //var folder = await rootFolder.EnsureFolderAsync(grower); // TODO: this makes a call, probably want to avoid that within the loop for the real thing
+    //var file = folder.Files.Add(fci);
+    //context.Load(file);
+    //Console.WriteLine("Creating file...");
+    //await context.ExecuteQueryAsync();
+
+    //Console.WriteLine("Successfully created file");
 }
 catch(Exception ex)
 {
